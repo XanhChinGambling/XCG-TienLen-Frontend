@@ -10,12 +10,6 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react(), tailwindcss(), tsconfigPaths(), viteSingleFile()],
-
-    build: {
-      outDir: "public", // overriding public (public/index.html)
-      emptyOutDir: false,
-    },
-
     server: {
       hmr: true,
       port: 3000,
