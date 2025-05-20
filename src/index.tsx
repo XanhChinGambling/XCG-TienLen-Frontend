@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 
 import { DiscordSDK } from "@discord/embedded-app-sdk";
-import { DISCORD_CLIENT_ID, FIREBASE_CONFIG } from "@/constants/Common";
+import { API_BASE, FIREBASE_CONFIG } from "@/constants/Common";
 
 import "./styles/index.css";
 
@@ -15,13 +15,13 @@ const firebaseAnalytics = getAnalytics(firebaseApplication);
 
 const application = async () => {
   try {
-    const discordSdk = new DiscordSDK(DISCORD_CLIENT_ID);
+    const discordSdk = new DiscordSDK(API_BASE);
     await discordSdk.ready();
 
     await discordSdk.commands.authorize({
       scope: ["identify", "guilds", "applications.commands"],
       response_type: "code",
-      client_id: DISCORD_CLIENT_ID,
+      client_id: API_BASE,
       prompt: "none",
       state: "",
     });
