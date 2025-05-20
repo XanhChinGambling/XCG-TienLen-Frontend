@@ -1,5 +1,8 @@
 // --- Enviroment Variables ---
 
+export const DISCORD_CLIENT_ID = import.meta.env.VITE_DISCORD_CLIENT_ID as string;
+export const DISCORD_REDIRECT_URI = import.meta.env.VITE_DISCORD_REDIRECT_URI as string;
+
 // --- Others Variables ---
 
 /**

@@ -4,15 +4,13 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 
 import { DiscordSDK } from "@discord/embedded-app-sdk";
+import { DISCORD_CLIENT_ID, FIREBASE_CONFIG } from "@/constants/Common";
 
 import "./styles/index.css";
-import { FIREBASE_CONFIG } from "@/constants/Common";
-
-const DISCORD_CLIENT_ID = import.meta.env.VITE_DISCORD_CLIENT_ID;
 
 // --- Application ---
 
-const firebaseApplication = initializeApp(FIREBASE_CONFIG);
+const firebaseApplication = initializeApp(FIREBASE_CONFIG, "XanhChinTienLen");
 const firebaseAnalytics = getAnalytics(firebaseApplication);
 
 const application = async () => {
