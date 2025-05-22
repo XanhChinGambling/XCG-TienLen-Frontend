@@ -3,7 +3,7 @@ import { CallChallenge, CallLogin, CallRefreshToken } from "@/query/v1/auth/Disc
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-interface AuthContextProp {
+export interface AuthContextProp {
   // --- State ---
   sdkAuthorizeCode?: string;
 
