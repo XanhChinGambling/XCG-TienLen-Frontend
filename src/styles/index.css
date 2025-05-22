@@ -23,8 +23,8 @@
   --color-neon-blue: oklch(90% 0.2 200);
   --color-neon-mint: oklch(85% 0.27 170);
   --color-neon-coral: oklch(88% 0.30 35);
-  --color-neon-purple: oklch(82% 0.31 280);
-  --color-dark-purple: oklch(50% 0.2359 279.41);
+  --color-neon-purple: oklch(0.41 0.165 283.34);
+  --color-dark-purple: oklch(0.25 0.1113 281.19);
 
   --color-border: var(--color-gray-400, currentColor);
 }

@@ -6,7 +6,10 @@ import { getAnalytics } from "firebase/analytics";
 import { DiscordSDK } from "@discord/embedded-app-sdk";
 import { API_BASE, FIREBASE_CONFIG } from "@/constants/Common";
 
+import "@radix-ui/themes/styles.css";
 import "./styles/index.css";
+import { Theme } from "@radix-ui/themes";
+import Router from "./pages/Router";
 
 // --- Application ---
 
@@ -18,13 +21,15 @@ const application = async () => {
     const discordSdk = new DiscordSDK(API_BASE);
     await discordSdk.ready();
 
-    await discordSdk.commands.authorize({
+    const { code } = await discordSdk.commands.authorize({
       scope: ["identify", "guilds", "applications.commands"],
       response_type: "code",
       client_id: API_BASE,
       prompt: "none",
       state: "",
     });
+
+
   } catch {
     console.info("This client running in browser!");
   }
@@ -34,20 +39,13 @@ const application = async () => {
 const ApplicationRendering = () => {
   application();
 
-  return (
-    <div className="h-full w-full bg-blue-500">
-      <div className="flex flex-col h-full w-full justify-center items-center">
-        <div>
-          <h1>{firebaseAnalytics.app.name}</h1>
-          <p>{firebaseAnalytics.app.options.projectId}</p>
-        </div>
-      </div>
-    </div>
-  );
+  return <Router />;
 };
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ApplicationRendering />
+    <Theme appearance="dark">
+      <ApplicationRendering />
+    </Theme>
   </StrictMode>
 );
