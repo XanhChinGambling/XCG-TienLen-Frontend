@@ -9,8 +9,8 @@ import { API_BASE, FIREBASE_CONFIG } from "@/constants/Common";
 import "@radix-ui/themes/styles.css";
 import "./styles/index.css";
 import { Theme } from "@radix-ui/themes";
-import Router from "./pages/Router";
-import useAuthContext, { AuthContextProp } from "@/context/AuthContext";
+import AppRouter from "./pages/AppRouter";
+import useAuthContext from "@/context/AuthContext";
 import { useEffectOnce } from "@/hook/useEffectOnce";
 
 // --- Application ---
@@ -45,7 +45,7 @@ const ApplicationRendering = () => {
     startApp();
   });
 
-  return <Router />;
+  return <AppRouter />;
 };
 
 createRoot(document.getElementById("root")!).render(

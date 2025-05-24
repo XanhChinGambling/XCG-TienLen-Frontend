@@ -1,8 +1,8 @@
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
-import Home from "./Home";
+import Homepage from "./Homepage";
 import useAuthContext from "@/context/AuthContext";
-import NotLoginArlet from "./Login";
-import Token from "./Token";
+import NotLoginArlet from "./NotLoginArlet";
+import TokenLoginRedirect from "./TokenLoginRedirect";
 
 const GamlingBackground = () => (
   <div
@@ -18,20 +18,20 @@ const MustLogin = () => {
   else return <Outlet />;
 };
 
-export default function Router() {
+export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<MustLogin />}>
           <Route element={<GamlingBackground />}>
             {/* Application - Not scrollable */}
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Homepage />} />
           </Route>
         </Route>
 
         <Route>
           {/* Other routes - No style */}
-          <Route path="/token" element={<Token />} />
+          <Route path="/token" element={<TokenLoginRedirect />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,4 +1,4 @@
-import { formatNumber } from "@/util/Common";
+import { formatNumber } from "@/util/CommonUtil";
 import { describe, test, expect } from "vitest";
 
 describe("Hàm thường dụng - thử nghiệm", () => {
