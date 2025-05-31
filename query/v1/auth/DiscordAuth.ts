@@ -1,5 +1,5 @@
 import BackendWebClient from "@/lib/AxiosInstance";
-import LoginChallengeResponse from "@/query/v1/adto/LoginChallengeReponse";
+import LoginChallengeResponse from "@/query/v1/type/dto/LoginChallengeReponse";
 
 export const CallChallenge = async (): Promise<LoginChallengeResponse> => {
   const res = await BackendWebClient.get<LoginChallengeResponse>(
@@ -24,7 +24,6 @@ export const CallLogin = async (params: {
 
   return res.data;
 };
-
 
 export const CallRefreshToken = async (): Promise<string> => {
   const res = await BackendWebClient.post<string>("/api/v1/auth/refresh", null, {

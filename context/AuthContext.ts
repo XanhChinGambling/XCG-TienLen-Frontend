@@ -14,7 +14,7 @@ export interface AuthContextProp {
   login: (sdkAuthorizeCode: string, redirectUri?: string) => Promise<void>;
   refreshToken: () => Promise<void>;
 
-  // --- Check ---
+  // --- Checker ---
   isAuthoized: () => boolean;
   isRefreshTokenExpired: () => boolean;
 }
