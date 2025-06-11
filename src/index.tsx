@@ -6,9 +6,7 @@ import { getAnalytics } from "firebase/analytics";
 import { DiscordSDK } from "@discord/embedded-app-sdk";
 import { API_BASE, FIREBASE_CONFIG } from "@/constants/Common";
 
-import "@radix-ui/themes/styles.css";
 import "./styles/index.css";
-import { Theme } from "@radix-ui/themes";
 import AppRouter from "./pages/AppRouter";
 import useAuthContext from "@/context/AuthContext";
 import { useEffectOnce } from "@/hook/useEffectOnce";
@@ -50,8 +48,6 @@ const ApplicationRendering = () => {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Theme appearance="dark">
-      <ApplicationRendering />
-    </Theme>
+    <ApplicationRendering />
   </StrictMode>
 );

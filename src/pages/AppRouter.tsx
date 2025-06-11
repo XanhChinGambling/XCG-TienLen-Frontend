@@ -12,22 +12,22 @@ const GamlingBackground = () => (
   </div>
 );
 
-const MustLogin = () => {
-  const authContext = useAuthContext();
-  if (!authContext.isAuthoized()) return NotLoginArlet();
-  else return <Outlet />;
-};
+// const MustLogin = () => {
+//   const authContext = useAuthContext();
+//   if (!authContext.isAuthoized()) return NotLoginArlet();
+//   else return <Outlet />;
+// };
 
 export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<MustLogin />}>
-          <Route element={<GamlingBackground />}>
-            {/* Application - Not scrollable */}
-            <Route path="/" element={<Homepage />} />
-          </Route>
+        <Route element={<GamlingBackground />}>
+          {/* Application - Not scrollable */}
+          <Route path="/" element={<Homepage />} />
         </Route>
+        {/* <Route element={<MustLogin />}>
+        </Route> */}
 
         <Route>
           {/* Other routes - No style */}
