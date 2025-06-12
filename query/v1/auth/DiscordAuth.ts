@@ -1,5 +1,5 @@
 import BackendWebClient from "@/lib/AxiosInstance";
-import LoginChallengeResponse from "@/query/v1/type/dto/LoginChallengeReponse";
+import LoginChallengeResponse from "@/query/v1/type/response/LoginChallengeResponse";
 
 export const CallChallenge = async (): Promise<LoginChallengeResponse> => {
   const res = await BackendWebClient.get<LoginChallengeResponse>(

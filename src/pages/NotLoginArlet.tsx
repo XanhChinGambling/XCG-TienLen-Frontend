@@ -1,4 +1,4 @@
-import { DISCORD_REDIRECT_URI } from "@/constants/Common";
+import { DISCORD_REDIRECT_URI } from "@/constants/Enviroment";
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
 
 export default function NotLoginArlet() {

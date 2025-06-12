@@ -4,7 +4,8 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 
 import { DiscordSDK } from "@discord/embedded-app-sdk";
-import { API_BASE, FIREBASE_CONFIG } from "@/constants/Common";
+import { FIREBASE_CONFIG } from "@/constants/Config";
+import { API_BASE } from "@/constants/Enviroment";
 
 import "./styles/index.css";
 import AppRouter from "./pages/AppRouter";

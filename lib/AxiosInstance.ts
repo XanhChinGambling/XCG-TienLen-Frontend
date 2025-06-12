@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_BASE } from "@/constants/Common";
+import { API_BASE } from "@/constants/Enviroment";
 import authStore from "@/context/AuthContext";
 
 const BackendWebClient = axios.create({
@@ -9,7 +9,6 @@ const BackendWebClient = axios.create({
   },
 });
 
-// ========== Request Interceptor ==========
 BackendWebClient.interceptors.request.use(
   (config) => {
     const token = authStore.getState().accessToken;
@@ -19,7 +18,6 @@ BackendWebClient.interceptors.request.use(
   (error) => Promise.reject(new Error(error?.message ?? String(error)))
 );
 
-// ========== Response Interceptor ==========
 let isRefreshing = false;
 let refreshQueue: (() => void)[] = [];
 
@@ -28,7 +26,6 @@ BackendWebClient.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // Nếu không phải lỗi 401 hoặc đã xử lý rồi.
     if (
       error.response?.status !== 401 ||
       originalRequest._retry ||
@@ -41,17 +38,15 @@ BackendWebClient.interceptors.response.use(
         headers: error.response?.headers,
         config: error.config,
       });
-      
+
       // use in prod
       // setTimeout(() => window.location.reload(), 3000);
       return Promise.reject(new Error(error?.message ?? String(error)));
     }
 
-    // Đánh dấu đã retry.
     originalRequest._retry = true;
     const auth = authStore.getState();
 
-    // Nếu chưa đang refresh thì gọi refresh.
     if (!isRefreshing) {
       isRefreshing = true;
 
@@ -59,11 +54,9 @@ BackendWebClient.interceptors.response.use(
         await auth.refreshToken();
         isRefreshing = false;
 
-        // Gửi lại các request trong hàng đợi.
         refreshQueue.forEach((cb) => cb());
         refreshQueue = [];
 
-        // Gắn token mới và gửi lại request gốc.
         const newToken = authStore.getState().accessToken;
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return axios(originalRequest);
@@ -74,7 +67,6 @@ BackendWebClient.interceptors.response.use(
       }
     }
 
-    // --- Nếu đang refresh: xếp request vào hàng đợi ---
     return new Promise((resolve) => {
       refreshQueue.push(() => {
         const newToken = authStore.getState().accessToken;
