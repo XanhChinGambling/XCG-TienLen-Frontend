@@ -44,13 +44,7 @@ importers:
       react-router-dom:
         specifier: ^7.6.2
         version: 7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      rsocket-core:
-        specifier: 0.0.29-alpha.0
-        version: 0.0.29-alpha.0
       rsocket-flowable:
-        specifier: 0.0.29-alpha.0
-        version: 0.0.29-alpha.0
-      rsocket-websocket-client:
         specifier: 0.0.29-alpha.0
         version: 0.0.29-alpha.0
       tailwind-merge:
@@ -81,6 +75,12 @@ importers:
       '@types/react-dom':
         specifier: ^19.1.6
         version: 19.1.6(@types/react@19.1.7)
+      '@types/rsocket-core':
+        specifier: ^0.0.11
+        version: 0.0.11
+      '@types/rsocket-websocket-client':
+        specifier: ^0.0.7
+        version: 0.0.7
       '@vitejs/plugin-react':
         specifier: ^4.5.2
         version: 4.5.2(vite@6.3.5(@types/node@22.15.31)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0))
@@ -105,6 +105,12 @@ importers:
       jsdom:
         specifier: ^26.1.0
         version: 26.1.0
+      rsocket-core:
+        specifier: 0.0.29-alpha.0
+        version: 0.0.29-alpha.0
+      rsocket-websocket-client:
+        specifier: 0.0.29-alpha.0
+        version: 0.0.29-alpha.0
       tw-animate-css:
         specifier: ^1.3.4
         version: 1.3.4
@@ -1629,6 +1635,18 @@ packages:
 
   '@types/request@2.48.12':
     resolution: {integrity: sha512-G3sY+NpsA9jnwm0ixhAFQSJ3Q9JkpLZpJbI3GMv0mIAT0y3mRabYeINzal5WOChIiaTEGQYlHOKgkaM9EisWHw==}
+
+  '@types/rsocket-core@0.0.11':
+    resolution: {integrity: sha512-hCM5786b0OIwEfyMgM2EepnZaNZNp4be8NFwB+ilFyGDJDizhgog80e3tw/Os2sdd5ky8aIRTGeOFSZXXmNUrA==}
+
+  '@types/rsocket-flowable@0.0.8':
+    resolution: {integrity: sha512-It+fbW3fiUJLsL1IkvWL8K18gt4oMpXGgjbSA3hhRLdnkPlBCCqpPzT4WlD8rQtojSoer6bcSVjqQQQQCds+fQ==}
+
+  '@types/rsocket-types@0.0.6':
+    resolution: {integrity: sha512-l9ZKGUc9OWcF0BJvhl3d6nFEVudOeB4BVrXupu+oOYQWYPNGARSTMrw9ZzBQsRR+PKZvGevpQLTPY17n80Cgsg==}
+
+  '@types/rsocket-websocket-client@0.0.7':
+    resolution: {integrity: sha512-G4j1P4T67hDyV8Ah1ooqqfy0YV0DqVi4s60BjB4gtQIcZPY6d4AA9Ld2T+1iUEQQCTugkoQkt50mKWB2RwPyvA==}
 
   '@types/stack-utils@2.0.3':
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
@@ -6652,6 +6670,27 @@ snapshots:
       '@types/node': 22.15.31
       '@types/tough-cookie': 4.0.5
       form-data: 2.5.3
+
+  '@types/rsocket-core@0.0.11':
+    dependencies:
+      '@types/node': 22.15.31
+      '@types/rsocket-flowable': 0.0.8
+      '@types/rsocket-types': 0.0.6
+
+  '@types/rsocket-flowable@0.0.8':
+    dependencies:
+      '@types/rsocket-types': 0.0.6
+
+  '@types/rsocket-types@0.0.6':
+    dependencies:
+      '@types/node': 22.15.31
+      '@types/rsocket-flowable': 0.0.8
+
+  '@types/rsocket-websocket-client@0.0.7':
+    dependencies:
+      '@types/rsocket-core': 0.0.11
+      '@types/rsocket-flowable': 0.0.8
+      '@types/rsocket-types': 0.0.6
 
   '@types/stack-utils@2.0.3': {}
 

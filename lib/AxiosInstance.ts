@@ -2,6 +2,8 @@ import axios from "axios";
 import { API_BASE } from "@/constants/Enviroment";
 import authStore from "@/context/AuthContext";
 
+// -----------------------------------------------------------------------------------
+
 const BackendWebClient = axios.create({
   baseURL: API_BASE,
   headers: {
@@ -9,27 +11,35 @@ const BackendWebClient = axios.create({
   },
 });
 
+export default BackendWebClient;
+
+// -----------------------------------------------------------------------------------
+
 BackendWebClient.interceptors.request.use(
   (config) => {
     const token = authStore.getState().accessToken;
     if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
+
   (error) => Promise.reject(new Error(error?.message ?? String(error)))
 );
+
+// -----------------------------------------------------------------------------------
 
 let isRefreshing = false;
 let refreshQueue: (() => void)[] = [];
 
 BackendWebClient.interceptors.response.use(
   (response) => response,
+
   async (error) => {
     const originalRequest = error.config;
 
     if (
       error.response?.status !== 401 ||
       originalRequest._retry ||
-      originalRequest.url.includes("/auth/refresh")
+      originalRequest.url.includes("v1/auth/refresh")
     ) {
       console.error("Axios response error:", {
         message: error.message,
@@ -76,5 +86,3 @@ BackendWebClient.interceptors.response.use(
     });
   }
 );
-
-export default BackendWebClient;

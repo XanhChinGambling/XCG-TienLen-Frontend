@@ -1,5 +1,5 @@
 import { REFRESH_TOKEN_TTL } from "@/constants/Config";
-import { CallChallenge, CallLogin, CallRefreshToken } from "@/query/v1/auth/DiscordAuth";
+import { CallChallenge, CallLogin, CallRefreshToken } from "@/query/v1/rest/auth/DiscordAuth";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
