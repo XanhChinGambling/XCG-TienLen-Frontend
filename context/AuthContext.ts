@@ -5,61 +5,58 @@ import { persist } from "zustand/middleware";
 
 export interface AuthContextProp {
   // --- State ---
-  sdkAuthorizeCode?: string;
+  sdk_authorize_code?: string;
 
-  accessToken?: string;
-  lastRefresh?: string;
+  access_token?: string;
+  last_refresh?: string;
 
   // --- Function ---
-  login: (sdkAuthorizeCode: string, redirectUri?: string) => Promise<void>;
-  refreshToken: () => Promise<void>;
+  login: (sdk_auth_code: string, redirect_uri?: string) => Promise<void>;
+  refresh_token: () => Promise<void>;
 
   // --- Checker ---
-  isAuthoized: () => boolean;
-  isRefreshTokenExpired: () => boolean;
+  is_authoized: () => boolean;
+  is_refresh_token_expired: () => boolean;
 }
 
 const useAuthContext = create<AuthContextProp>()(
   persist(
     (set, get) => ({
-      // --- Function ---
-
-      login: async (sdkAuthorizeCode: string, redirectUri?: string) => {
+      login: async (sdk_auth_code: string, redirect_uri?: string) => {
         const challenge = await CallChallenge();
-        const accessToken = await CallLogin({
-          code: sdkAuthorizeCode,
+        const access_token = await CallLogin({
+          code: sdk_auth_code,
           state: challenge.state,
-          redirectUri,
+          redirectUri: redirect_uri,
         });
 
         set({
-          sdkAuthorizeCode: sdkAuthorizeCode,
-          accessToken: accessToken,
-          lastRefresh: new Date().toISOString(),
+          sdk_authorize_code: sdk_auth_code,
+          access_token: access_token,
+          last_refresh: new Date().toISOString(),
         });
       },
 
-      refreshToken: async () => {
+      refresh_token: async () => {
         const accessToken = await CallRefreshToken();
 
         set({
-          accessToken: accessToken,
-          lastRefresh: new Date().toISOString(),
+          access_token: accessToken,
+          last_refresh: new Date().toISOString(),
         });
       },
 
       // --- Check ---
 
-      isAuthoized: () => get().accessToken !== undefined,
+      is_authoized: () => get().access_token !== undefined,
 
-      isRefreshTokenExpired: () => {
-        const lastRefresh = new Date(get().lastRefresh!);
-        return Math.abs(new Date().getTime() - lastRefresh.getTime()) > REFRESH_TOKEN_TTL;
+      is_refresh_token_expired: () => {
+        const last_refresh = new Date(get().last_refresh!);
+        return Math.abs(new Date().getTime() - last_refresh.getTime()) > REFRESH_TOKEN_TTL;
       },
     }),
-    {
-      name: "auth-storage",
-    }
+
+    { name: "auth-storage" }
   )
 );
 

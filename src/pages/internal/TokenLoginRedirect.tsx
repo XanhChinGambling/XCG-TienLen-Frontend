@@ -1,6 +1,6 @@
 import useAuthContext from "@/context/AuthContext";
 import { useLocation, useSearchParams, useNavigate } from "react-router-dom";
-import { useEffectOnce } from "@/hook/useEffectOnce";
+import useEffectOnce from "@/hook/useEffectOnce";
 
 export default function TokenLoginRedirect() {
   const authContext = useAuthContext();

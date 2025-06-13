@@ -14,7 +14,7 @@ import { SCALE_IDENTIFIERS } from "@/constants/Common";
  * @returns A formatted string representation of the input number, including
  *          unit suffixes if applicable. If the number is invalid, returns "InfVal".
  */
-export function formatNumber(input: number, lastDigit = true): string {
+export function FormatNumber(input: number, lastDigit = true): string {
   if (!isFinite(input)) return "InfVal";
 
   const s = Math.floor(input < 0 ? -input : input).toString();

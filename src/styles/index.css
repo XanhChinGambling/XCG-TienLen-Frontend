@@ -20,6 +20,18 @@
 @theme {
   --font-family-nunito: 'Nunito', sans-serif;
 
+  --text-3xs: 0.5rem;
+  --text-2xs: 0.625rem;
+
+  --radius-5p: 5%;
+  --radius-10p: 10%;
+  --radius-15p: 15%;
+  --radius-20p: 20%;
+  --radius-25p: 25%;
+  --radius-30p: 30%;
+  --radius-50p: 50%;
+  --radius-75p: 75%;
+
   --color-neon-link: oklch(80% 0.15 200);
   --color-neon-link-hover: oklch(85% 0.2 270);
 
@@ -207,6 +219,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }

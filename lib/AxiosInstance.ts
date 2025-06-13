@@ -6,9 +6,7 @@ import authStore from "@/context/AuthContext";
 
 const BackendWebClient = axios.create({
   baseURL: API_BASE,
-  headers: {
-    "Content-Type": "application/json",
-  },
+  headers: { "Content-Type": "application/json" },
 });
 
 export default BackendWebClient;
@@ -17,7 +15,7 @@ export default BackendWebClient;
 
 BackendWebClient.interceptors.request.use(
   (config) => {
-    const token = authStore.getState().accessToken;
+    const token = authStore.getState().access_token;
     if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
@@ -61,13 +59,13 @@ BackendWebClient.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        await auth.refreshToken();
+        await auth.refresh_token();
         isRefreshing = false;
 
         refreshQueue.forEach((cb) => cb());
         refreshQueue = [];
 
-        const newToken = authStore.getState().accessToken;
+        const newToken = authStore.getState().access_token;
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return axios(originalRequest);
       } catch (refreshError) {
@@ -79,7 +77,7 @@ BackendWebClient.interceptors.response.use(
 
     return new Promise((resolve) => {
       refreshQueue.push(() => {
-        const newToken = authStore.getState().accessToken;
+        const newToken = authStore.getState().access_token;
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         resolve(axios(originalRequest));
       });

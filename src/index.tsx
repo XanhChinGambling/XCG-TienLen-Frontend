@@ -10,23 +10,23 @@ import { API_BASE } from "@/constants/Enviroment";
 import "./styles/index.css";
 import AppRouter from "./pages/AppRouter";
 import useAuthContext from "@/context/AuthContext";
-import { useEffectOnce } from "@/hook/useEffectOnce";
+import useEffectOnce from "@/hook/useEffectOnce";
 
 // --- Application ---
 
-const firebaseApplication = initializeApp(FIREBASE_CONFIG, "XanhChinTienLen");
-getAnalytics(firebaseApplication);
+const FirebaseApplication = initializeApp(FIREBASE_CONFIG, "XanhChinTienLen");
+getAnalytics(FirebaseApplication);
 
 // --- Rendering Root ---
 const ApplicationRendering = () => {
-  const authContext = useAuthContext();
+  const AuthContext = useAuthContext();
 
-  const startApp = async () => {
+  const StartApp = async () => {
     try {
-      const discordSdk = new DiscordSDK(API_BASE);
-      await discordSdk.ready();
+      const DiscordSdkInstance = new DiscordSDK(API_BASE);
+      await DiscordSdkInstance.ready();
 
-      const { code } = await discordSdk.commands.authorize({
+      const { code } = await DiscordSdkInstance.commands.authorize({
         scope: ["identify", "guilds", "applications.commands"],
         response_type: "code",
         client_id: API_BASE,
@@ -34,14 +34,14 @@ const ApplicationRendering = () => {
         state: "",
       });
 
-      authContext.login(code);
+      AuthContext.login(code);
     } catch {
       console.info("This client running in browser!");
     }
   };
 
   useEffectOnce(() => {
-    startApp();
+    StartApp();
   });
 
   return <AppRouter />;
