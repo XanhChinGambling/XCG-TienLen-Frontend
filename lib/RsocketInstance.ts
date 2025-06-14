@@ -19,8 +19,8 @@ const BackendWebSocketClient = new RSocketClient({
     url: API_WS_BASE,
     debug: ENV_IS_DEV,
   }),
-});
+}).connect();
 
-export default BackendWebSocketClient.connect();
+export default BackendWebSocketClient;
 
 // -----------------------------------------------------------------------------------

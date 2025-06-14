@@ -1,4 +1,5 @@
 import useSettingContext from "@/context/SettingContext";
+import useNetworkStatus from "@/hook/useNetworkStatus";
 import { FormatNumber } from "@/util/CommonUtil";
 import {
   Settings,
@@ -26,6 +27,7 @@ import {
 // Top Navigation Bar Component
 function TopNavigationBar() {
   const SettingContext = useSettingContext();
+  const IsOnlineContext = useNetworkStatus();
 
   const stats = [
     { label: "Người chơi", value: 1232, icon: Users, color: "text-green-400" },
@@ -33,60 +35,58 @@ function TopNavigationBar() {
   ];
 
   return (
-    <div className="text-white h-12 lg:h-14 bg-black/20 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-2 lg:px-4 relative">
+    <div className="flex items-center justify-between p-1 px-2 backdrop-blur border-b">
       {/* Game Logo and infomation */}
-      <div className="flex items-center space-x-2 lg:space-x-4">
-        <div className="flex items-center space-x-2 lg:space-x-3">
-          <div className="size-10 lg:size-12 flex items-center justify-center">
-            <img src="favicon.webp" alt="Logo Xanh Chín" className="rounded-30p" />
-          </div>
+      <div className="flex items-center gap-2 lg:gap-4">
+        <img src="favicon.webp" alt="Logo Xanh Chín" className="size-10 lg:size-12 rounded-30p" />
 
-          <div>
-            <div className="font-semibold text-sm lg:font-bold lg:text-lg text-white whitespace-nowrap">
-              Xanh Chín Project
-            </div>
-            <div className="text-sm lg:text-md">
-              Tiến Lên Miền Nam <span className="text-2xs lg:text-xs text-white/60">v0.1.0-dev</span>
-            </div>
-          </div>
+        <div>
+          <h2 className="font-semibold text-sm lg:text-lg">Xanh Chín Project</h2>
+          <p className="text-sm lg:text-md text-muted-foreground">
+            Tiến Lên Miền Nam <span className="text-2xs lg:text-xs">v0.1.0-dev</span>
+          </p>
         </div>
       </div>
 
       {/* Stats */}
-      <div className="flex items-center space-x-8 lg:space-x-16 border-x border-border/50 px-8">
+      <div className="flex space-x-8 lg:space-x-16 border-x px-8">
         {stats.map((stat, index) => (
-          <div key={index} className="flex flex-col space-y-0.5 text-white">
-            <div className="text-2xs lg:text-xs text-white/60 text-center">{stat.label}</div>
+          <div key={index} className="flex flex-col gap-0.5">
+            <div className="text-2xs lg:text-xs text-muted-foreground text-center">{stat.label}</div>
 
-            <div className="flex items-center gap-2 lg:gap-4">
-              <stat.icon className={`size-4 lg:size-5 ${stat.color}`} />
+            <div className="flex items-center gap-2">
+              <stat.icon className={`size-3 lg:size-4 ${stat.color}`} />
               <div className="text-sm lg:text-lg font-semibold">{FormatNumber(stat.value)}</div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Buttons */}
-      <div className="flex items-center space-x-1.5 lg:space-x-3">
-        <button className="p-3 hover:bg-white/20 rounded-30p transition-all duration-300" onClick={() => SettingContext.volume_toggle()}>
-          {SettingContext.volume_muted ? (
-            <VolumeX className="size-4 lg:size-6 text-white/60" />
+      {/* Button and ui */}
+      <div className="flex items-center gap-2">
+        {/* Network status */}
+        <div className="p-2 lg:p-3 hover:bg-foreground/20 rounded-30p transition-all">
+          {IsOnlineContext ? (
+            <Wifi className="size-6 text-green-400" />
           ) : (
-            <Volume2 className="size-4 lg:size-6 text-white" />
+            <WifiOff className="size-6 text-red-400" />
+          )}
+        </div>
+
+        {/* Volume mute control */}
+        <button
+          className="p-2 lg:p-3 hover:bg-foreground/20 rounded-30p transition-all"
+          onClick={() => SettingContext.volume_toggle()}>
+          {SettingContext.volume_muted || SettingContext.volume < 0.2 ? (
+            <VolumeX className="size-6 text-muted-foreground" />
+          ) : (
+            <Volume2 className="size-6" />
           )}
         </button>
 
-        <div className="flex p-1.5 lg:p-3 items-center space-x-1 lg:space-x-2 text-white/80">
-          {true ? (
-            <Wifi className="size-4 lg:size-6 text-green-400" />
-          ) : (
-            <WifiOff className="size-4 lg:size-6 text-red-400" />
-          )}
-          <span className="text-[10px] lg:text-sm">{true ? "Online" : "Offline"}</span>
-        </div>
-
-        <button className="p-1.5 lg:p-3 hover:bg-white/20 rounded-md transition-all duration-300 relative">
-          <Bell className="size-4 lg:size-6 text-white" />
+        {/* Notification */}
+        <button className="relative p-2 lg:p-3 hover:bg-foreground/20 rounded-30p transition-all">
+          <Bell className="size-6" />
           {true && (
             <div className="absolute -top-1 -right-1 w-4 h-4 lg:w-5 lg:h-5 bg-red-500 rounded-md flex items-center justify-center text-[9px] lg:text-xs text-white font-bold">
               9+
@@ -94,8 +94,9 @@ function TopNavigationBar() {
           )}
         </button>
 
-        <button className="p-1.5 lg:p-3 hover:bg-white/20 rounded-md transition-all duration-300">
-          <Settings className="size-4 lg:size-6 text-white group-hover:text-blue-300 transition-colors mx-auto" />
+        {/* Setting */}
+        <button className="p-2 lg:p-3 hover:bg-foreground/20 rounded-30p transition-all">
+          <Settings className="size-6" />
         </button>
       </div>
     </div>
@@ -158,7 +159,7 @@ function UserProfileCard() {
 }
 
 // Event Icons Component
-function EventIcons() {
+export function EventIcons() {
   const events = [
     {
       icon: Crown,
@@ -294,7 +295,6 @@ export default function Homepage() {
 
       <div className="absolute m-4 top-14 left-0">
         <UserProfileCard />
-        <EventIcons />
       </div>
 
       <CurrencyPanel />

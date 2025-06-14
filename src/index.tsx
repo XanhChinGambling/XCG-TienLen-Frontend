@@ -8,9 +8,11 @@ import { FIREBASE_CONFIG } from "@/constants/Config";
 import { API_BASE } from "@/constants/Enviroment";
 
 import "./styles/index.css";
-import AppRouter from "./pages/AppRouter";
+import AppRouter from "./pages/internal/AppRouter";
 import useAuthContext from "@/context/AuthContext";
 import useEffectOnce from "@/hook/useEffectOnce";
+import { Toaster } from "@/component/ui/sonner";
+import { ThemeProvider } from "@/component/theme-provider";
 
 // --- Application ---
 
@@ -49,6 +51,10 @@ const ApplicationRendering = () => {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ApplicationRendering />
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <Toaster />
+
+      <ApplicationRendering />
+    </ThemeProvider>
   </StrictMode>
 );

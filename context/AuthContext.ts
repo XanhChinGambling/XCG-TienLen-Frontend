@@ -1,7 +1,9 @@
 import { REFRESH_TOKEN_TTL } from "@/constants/Config";
 import { CallChallenge, CallLogin, CallRefreshToken } from "@/query/v1/rest/auth/DiscordAuth";
+import { FireConnect } from "@/query/v1/rsocket/RsocketIo";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { toast } from "sonner";
 
 export interface AuthContextProp {
   // --- State ---
@@ -35,6 +37,10 @@ const useAuthContext = create<AuthContextProp>()(
           access_token: access_token,
           last_refresh: new Date().toISOString(),
         });
+
+        // im not use event or promise cuz lazy, just use it
+        await FireConnect(access_token);
+        toast("Backend connected.");
       },
 
       refresh_token: async () => {

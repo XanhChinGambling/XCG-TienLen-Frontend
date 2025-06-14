@@ -28,3 +28,8 @@ export function FormatNumber(input: number, lastDigit = true): string {
     (SCALE_IDENTIFIERS[(s.length - r) / 3] || "udf")
   );
 }
+
+/** Rsocket metadata format... ? */
+export function FormatMetadata(metadata: string) {
+  return String.fromCharCode(metadata.length) + metadata;
+}
