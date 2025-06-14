@@ -13,6 +13,8 @@ import useAuthContext from "@/context/AuthContext";
 import useEffectOnce from "@/hook/useEffectOnce";
 import { Toaster } from "@/component/ui/sonner";
 import { ThemeProvider } from "@/component/theme-provider";
+import SettingDialog from "./pages/dialog/SettingDialog";
+import useSoundContext from "@/context/SoundContext";
 
 // --- Application ---
 
@@ -22,6 +24,7 @@ getAnalytics(FirebaseApplication);
 // --- Rendering Root ---
 const ApplicationRendering = () => {
   const AuthContext = useAuthContext();
+  const SoundContext = useSoundContext();
 
   const StartApp = async () => {
     try {
@@ -44,6 +47,7 @@ const ApplicationRendering = () => {
 
   useEffectOnce(() => {
     StartApp();
+    SoundContext.init();
   });
 
   return <AppRouter />;
@@ -53,6 +57,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Toaster />
+      <SettingDialog />
 
       <ApplicationRendering />
     </ThemeProvider>

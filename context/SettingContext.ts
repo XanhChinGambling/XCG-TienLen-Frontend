@@ -2,42 +2,25 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export interface SettingContextProp {
-  volume: number; // 0 to 1
-  volume_muted: boolean;
-  isDialogOpen: boolean;
+  is_dialog_open: boolean;
 
-  setVolume: (volume: number) => void;
-  volume_toggle: () => void;
-  openDialog: () => void;
-  closeDialog: () => void;
+  open_dialog: () => void;
+  close_dialog: () => void;
 }
 
 const useSettingContext = create<SettingContextProp>()(
   persist(
-    (set, get) => ({
-      volume: 0.5,
-      volume_muted: false,
-      isDialogOpen: false,
+    (set) => ({
+      is_dialog_open: false,
 
-      setVolume: (volume: number) => set({ volume, volume_muted: volume <= 0.2 }),
+      open_dialog: () => set({ is_dialog_open: true }),
 
-      volume_toggle: () => {
-        const current = get();
-        if (current.volume_muted)
-          set({ volume_muted: false, volume: current.volume <= 0.2 ? 0.5 : current.volume });
-        else set({ volume_muted: true });
-      },
-      
-      openDialog: () => set({ isDialogOpen: true }),
-      closeDialog: () => set({ isDialogOpen: false }),
+      close_dialog: () => set({ is_dialog_open: false }),
     }),
     {
       name: "setting-storage",
-      // Không persist dialog state
-      partialize: (state) => ({
-        volume: state.volume,
-        volume_muted: state.volume_muted,
-      }),
+
+      partialize: (_) => ({}),
     }
   )
 );

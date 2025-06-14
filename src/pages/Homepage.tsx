@@ -1,3 +1,4 @@
+import useSoundContext from "@/context/SoundContext";
 import useSettingContext from "@/context/SettingContext";
 import useNetworkStatus from "@/hook/useNetworkStatus";
 import { FormatNumber } from "@/util/CommonUtil";
@@ -28,6 +29,7 @@ import {
 function TopNavigationBar() {
   const SettingContext = useSettingContext();
   const IsOnlineContext = useNetworkStatus();
+  const SoundContext = useSoundContext();
 
   const stats = [
     { label: "Người chơi", value: 1232, icon: Users, color: "text-green-400" },
@@ -76,8 +78,8 @@ function TopNavigationBar() {
         {/* Volume mute control */}
         <button
           className="p-2 lg:p-3 hover:bg-foreground/20 rounded-30p transition-all"
-          onClick={() => SettingContext.volume_toggle()}>
-          {SettingContext.volume_muted || SettingContext.volume < 0.2 ? (
+          onClick={() => SoundContext.toggle_mute()}>
+          {SoundContext.muted || SoundContext.volume < 0.2 ? (
             <VolumeX className="size-6 text-muted-foreground" />
           ) : (
             <Volume2 className="size-6" />
@@ -95,7 +97,9 @@ function TopNavigationBar() {
         </button>
 
         {/* Setting */}
-        <button className="p-2 lg:p-3 hover:bg-foreground/20 rounded-30p transition-all">
+        <button
+          className="p-2 lg:p-3 hover:bg-foreground/20 rounded-30p transition-all"
+          onClick={() => SettingContext.open_dialog()}>
           <Settings className="size-6" />
         </button>
       </div>
