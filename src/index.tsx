@@ -26,7 +26,7 @@ const ApplicationRendering = () => {
   const AuthContext = useAuthContext();
   const SoundContext = useSoundContext();
 
-  const StartApp = async () => {
+  const StartSdk = async () => {
     try {
       const DiscordSdkInstance = new DiscordSDK(API_BASE);
       await DiscordSdkInstance.ready();
@@ -46,7 +46,8 @@ const ApplicationRendering = () => {
   };
 
   useEffectOnce(() => {
-    StartApp();
+    StartSdk();
+
     SoundContext.init();
   });
 

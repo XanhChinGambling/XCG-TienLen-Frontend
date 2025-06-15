@@ -13,30 +13,6 @@ import { Slider } from "@/component/ui/slider";
 import useSettingContext from "@/context/SettingContext";
 import useSoundContext from "@/context/SoundContext";
 
-/**
- * A dialog component for managing application settings.
- *
- * This component provides a settings interface with the following features:
- * - Sound controls:
- *   - Mute toggle to enable/disable all audio
- *   - Volume slider for adjusting sound levels (0-100%)
- * - Additional settings:
- *   - Autoplay toggle (placeholder)
- *   - Dark mode toggle (placeholder)
- *
- * @component
- * @example
- * ```tsx
- * <SettingDialog />
- * ```
- *
- * @remarks
- * The component uses the following contexts:
- * - SettingContext - For managing dialog open state
- * - SoundContext - For managing audio settings
- *
- * @returns A modal dialog containing settings controls and options
- */
 const SettingDialog = () => {
   const SettingContext = useSettingContext();
   const SoundContext = useSoundContext();
@@ -102,7 +78,7 @@ const SettingDialog = () => {
                 <Label htmlFor="autoplay-toggle" className="text-sm">
                   Tự động phát
                 </Label>
-                <p className="text-xs text-muted-foreground">Tự động phát nội dung tiếp theo</p>
+                <p className="text-xs text-muted-foreground">Để trưng cho đỡ trống</p>
               </div>
               <Switch
                 id="autoplay-toggle"
@@ -118,7 +94,7 @@ const SettingDialog = () => {
                 <Label htmlFor="theme-toggle" className="text-sm">
                   Chế độ tối
                 </Label>
-                <p className="text-xs text-muted-foreground">Sử dụng giao diện tối</p>
+                <p className="text-xs text-muted-foreground">Để trưng cho đỡ trống</p>
               </div>
               <Switch
                 id="theme-toggle"

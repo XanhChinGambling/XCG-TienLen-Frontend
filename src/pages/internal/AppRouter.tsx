@@ -1,15 +1,16 @@
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Homepage from "../Homepage";
 import useAuthContext from "@/context/AuthContext";
 import NotLoginDialog from "../dialog/NotLoginDialog";
 import TokenLoginRedirect from "./TokenLoginRedirect";
+import AppInitializer from "./AppInitializer";
 
 export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Application - Auth Require - Not scrollable */}
-        <Route element={useAuthContext().is_authoized() ? <Outlet /> : NotLoginDialog()}>
+        {/* Application - Auth Require */}
+        <Route element={useAuthContext().is_authoized() ? AppInitializer() : NotLoginDialog()}>
           <Route path="/" element={<Homepage />} />
         </Route>
 

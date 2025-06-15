@@ -1,5 +1,3 @@
-// --- Common variables ---
-
 /**
  * A constant array of string representations for number units,
  * typically used to abbreviate large numbers in a human-readable format.

@@ -24,16 +24,18 @@ import {
   Star,
   Trophy,
 } from "lucide-react";
+import useTienLenStatContext from "@/context/TienLenStatContext";
 
 // Top Navigation Bar Component
 function TopNavigationBar() {
   const SettingContext = useSettingContext();
   const IsOnlineContext = useNetworkStatus();
   const SoundContext = useSoundContext();
+  const TLStatContext = useTienLenStatContext();
 
   const stats = [
-    { label: "Người chơi", value: 1232, icon: Users, color: "text-green-400" },
-    { label: "Phòng chơi", value: 89, icon: Heart, color: "text-red-400" },
+    { label: "Người chơi", value: TLStatContext.players, icon: Users, color: "text-green-400" },
+    { label: "Phòng chơi", value: TLStatContext.rooms, icon: Heart, color: "text-red-400" },
   ];
 
   return (

@@ -45,6 +45,8 @@
     "@types/react": "^19.1.7",
     "@types/react-dom": "^19.1.6",
     "@types/rsocket-core": "^0.0.11",
+    "@types/rsocket-flowable": "^0.0.8",
+    "@types/rsocket-types": "^0.0.6",
     "@types/rsocket-websocket-client": "^0.0.7",
     "@vitejs/plugin-react": "^4.5.2",
     "@vitejs/plugin-react-swc": "^3.10.2",

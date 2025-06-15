@@ -14,7 +14,6 @@ const useSettingContext = create<SettingContextProp>()(
       is_dialog_open: false,
 
       open_dialog: () => set({ is_dialog_open: true }),
-
       close_dialog: () => set({ is_dialog_open: false }),
     }),
     {
