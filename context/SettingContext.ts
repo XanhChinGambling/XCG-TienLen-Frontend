@@ -1,20 +1,20 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export interface SettingContextProp {
-  is_dialog_open: boolean;
+export interface SettingStore {
+  isDialogOpen: boolean;
 
-  open_dialog: () => void;
-  close_dialog: () => void;
+  openDialog: () => void;
+  closeDialog: () => void;
 }
 
-const useSettingContext = create<SettingContextProp>()(
+const useSettingContext = create<SettingStore>()(
   persist(
     (set) => ({
-      is_dialog_open: false,
+      isDialogOpen: false,
 
-      open_dialog: () => set({ is_dialog_open: true }),
-      close_dialog: () => set({ is_dialog_open: false }),
+      openDialog: () => set({ isDialogOpen: true }),
+      closeDialog: () => set({ isDialogOpen: false }),
     }),
     {
       name: "setting-storage",

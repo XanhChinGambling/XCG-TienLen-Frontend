@@ -1,26 +1,30 @@
-import useRSocketContext from "@/context/RsocketContext";
+import useAuthContext from "@/context/AuthContext";
 import useTienLenStatContext from "@/context/TienLenStatContext";
-import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
+import NotLoginDialog from "../dialog/NotLoginDialog";
+import { useRef } from "react";
 
 export default function AppInitializer() {
-  const [initialized, setInitialized] = useState(false);
-  const RsocketContext = useRSocketContext();
+  const state = useRef(false);
+
   const TLStatContext = useTienLenStatContext();
+  const AuthContext = useAuthContext();
 
   const doInit = async () => {
-    await RsocketContext.connect();
     TLStatContext.init();
 
-
-    setInitialized(true);
+    await Promise.all([]); 
+    // there are nothing to wait lmao
   };
 
-  useEffect(() => {
-    doInit();
-  }, []);
+  if (!state.current) {
+    if (!AuthContext.isAuthoized) return <div>Loading... </div>;
 
-  if (!initialized) return <div></div>;
+    doInit();
+    state.current = true;
+  }
+
+  if (!AuthContext.isAuthoized) return <NotLoginDialog />;
 
   return <Outlet />;
 }

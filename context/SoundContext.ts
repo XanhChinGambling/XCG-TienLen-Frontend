@@ -1,11 +1,11 @@
 import { create } from "zustand";
 
-interface BGMContextProp {
+interface SoundStore {
   volume: number; // 0.0 -> 1.0
   muted: boolean;
-  is_playing: boolean;
+  isPlaying: boolean;
 
-  set_volume: (v: number) => void;
+  setVolume: (v: number) => void;
   toggle_mute: () => void;
 
   init: () => void;
@@ -17,13 +17,13 @@ const audio = new Audio("/sound/bgm.mp3");
 audio.loop = true;
 audio.volume = 0.5;
 
-const useSoundContext = create<BGMContextProp>((set, get) => {
+const useSoundContext = create<SoundStore>((set, get) => {
   return {
     volume: audio.volume,
     muted: false,
-    is_playing: false,
+    isPlaying: false,
 
-    set_volume: (v: number) => {
+    setVolume: (v: number) => {
       audio.volume = v;
       set({ volume: v });
     },
@@ -37,7 +37,7 @@ const useSoundContext = create<BGMContextProp>((set, get) => {
       audio
         .play()
         .then(() => {
-          set({ is_playing: true });
+          set({ isPlaying: true });
         })
         .catch((err) => {
           console.warn("Autoplay prevented or error:", err);
@@ -46,12 +46,13 @@ const useSoundContext = create<BGMContextProp>((set, get) => {
 
     pause: () => {
       audio.pause();
-      set({ is_playing: false });
+      set({ isPlaying: false });
     },
 
     init: () => {
       const tryPlay = () => {
         get().play();
+
         window.removeEventListener("click", tryPlay);
         window.removeEventListener("touchstart", tryPlay);
       };

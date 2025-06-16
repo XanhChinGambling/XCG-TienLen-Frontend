@@ -1,65 +1,49 @@
 import { REFRESH_TOKEN_TTL } from "@/constants/Config";
 import { CallChallenge, CallLogin, CallRefreshToken } from "@/query/v1/rest/auth/DiscordAuth";
-import { FireConnect } from "@/query/v1/rsocket/RsocketIo";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { toast } from "sonner";
 
-export interface AuthContextProp {
-  // --- State ---
-  sdk_authorize_code?: string;
+export interface AuthStore {
+  discordAuthCode?: string;
 
-  access_token?: string;
-  last_refresh?: string;
+  accessToken?: string;
+  lastRefresh?: string;
 
-  // --- Function ---
-  login: (sdk_auth_code: string, redirect_uri?: string) => Promise<void>;
-  refresh_token: () => Promise<void>;
+  login: (sdkAuthCode: string, redirectUri?: string) => Promise<void>;
+  refreshToken: () => Promise<void>;
 
-  // --- Checker ---
-  is_authoized: () => boolean;
-  is_refresh_token_expired: () => boolean;
+  isAuthoized: () => boolean;
+  isRefreshTokenExpired: () => boolean;
 }
 
-const useAuthContext = create<AuthContextProp>()(
+const useAuthContext = create<AuthStore>()(
   persist(
     (set, get) => ({
-      login: async (sdk_auth_code: string, redirect_uri?: string) => {
-        const challenge = await CallChallenge();
-        const access_token = await CallLogin({
-          code: sdk_auth_code,
-          state: challenge.state,
-          redirectUri: redirect_uri,
-        });
-
+      login: async (discordAuthCode: string, redirectUri?: string) =>
         set({
-          sdk_authorize_code: sdk_auth_code,
-          access_token: access_token,
-          last_refresh: new Date().toISOString(),
-        });
+          discordAuthCode,
 
-        // im not use event or promise cuz lazy, just use it
-        await FireConnect(access_token);
-        toast("Backend connected.");
-      },
+          accessToken: await CallLogin({
+            code: discordAuthCode,
+            state: (await CallChallenge()).state,
+            redirectUri,
+          }),
 
-      refresh_token: async () => {
-        const accessToken = await CallRefreshToken();
+          lastRefresh: new Date().toISOString(),
+        }),
 
+      refreshToken: async () =>
         set({
-          access_token: accessToken,
-          last_refresh: new Date().toISOString(),
-        });
-      },
+          accessToken: await CallRefreshToken(),
+          lastRefresh: new Date().toISOString(),
+        }),
 
       // --- Check ---
 
-      is_authoized: () => get().access_token !== undefined,
+      isAuthoized: () => get().accessToken !== undefined,
 
-      is_refresh_token_expired: () => {
-        const last_refresh = new Date(get().last_refresh!);
-        return Math.abs(new Date().getTime() - last_refresh.getTime()) > REFRESH_TOKEN_TTL;
-      },
+      isRefreshTokenExpired: () =>
+        Math.abs(new Date().getTime() - new Date(get().lastRefresh!).getTime()) > REFRESH_TOKEN_TTL,
     }),
 
     { name: "auth-storage" }

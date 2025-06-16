@@ -17,11 +17,11 @@ const SettingDialog = () => {
   const SettingContext = useSettingContext();
   const SoundContext = useSoundContext();
 
-  const handleVolumeChange = (value: number[]) => SoundContext.set_volume((Math.round(value[0] / 10) * 10) / 100);
+  const handleVolumeChange = (value: number[]) => SoundContext.setVolume((Math.round(value[0] / 10) * 10) / 100);
   const getVolumePercentage = () => Math.round(SoundContext.volume * 100);
 
   return (
-    <Dialog open={SettingContext.is_dialog_open} onOpenChange={() => SettingContext.close_dialog()}>
+    <Dialog open={SettingContext.isDialogOpen} onOpenChange={() => SettingContext.closeDialog()}>
       <DialogContent className="w-4/5 h-9/10 bg-transparent backdrop-blur overflow-y-auto">
         <DialogHeader className="border-b py-2 text-center">
           <DialogTitle>Cài đặt chung</DialogTitle>

@@ -47,7 +47,7 @@ function TopNavigationBar() {
         <div>
           <h2 className="font-semibold text-sm lg:text-lg">Xanh Chín Project</h2>
           <p className="text-sm lg:text-md text-muted-foreground">
-            Tiến Lên Miền Nam <span className="text-2xs lg:text-xs">v0.1.0-dev</span>
+            Tiến Lên Miền Nam <span className="text-2xs lg:text-xs">v1.0.0-dev</span>
           </p>
         </div>
       </div>
@@ -79,6 +79,7 @@ function TopNavigationBar() {
 
         {/* Volume mute control */}
         <button
+          aria-label="mute-toggle"
           className="p-2 lg:p-3 hover:bg-foreground/20 rounded-30p transition-all"
           onClick={() => SoundContext.toggle_mute()}>
           {SoundContext.muted || SoundContext.volume < 0.2 ? (
@@ -100,8 +101,9 @@ function TopNavigationBar() {
 
         {/* Setting */}
         <button
+          aria-label="setting-toggle"
           className="p-2 lg:p-3 hover:bg-foreground/20 rounded-30p transition-all"
-          onClick={() => SettingContext.open_dialog()}>
+          onClick={() => SettingContext.openDialog()}>
           <Settings className="size-6" />
         </button>
       </div>

@@ -15,7 +15,7 @@ export default BackendWebClient;
 
 BackendWebClient.interceptors.request.use(
   (config) => {
-    const token = authStore.getState().access_token;
+    const token = authStore.getState().accessToken;
     if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
@@ -59,13 +59,13 @@ BackendWebClient.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        await auth.refresh_token();
+        await auth.refreshToken();
         isRefreshing = false;
 
         refreshQueue.forEach((cb) => cb());
         refreshQueue = [];
 
-        const newToken = authStore.getState().access_token;
+        const newToken = authStore.getState().accessToken;
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return axios(originalRequest);
       } catch (refreshError) {
@@ -77,7 +77,7 @@ BackendWebClient.interceptors.response.use(
 
     return new Promise((resolve) => {
       refreshQueue.push(() => {
-        const newToken = authStore.getState().access_token;
+        const newToken = authStore.getState().accessToken;
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         resolve(axios(originalRequest));
       });

@@ -76,11 +76,17 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
-    @apply border-border;
+    @apply border-border outline-ring/50;
   }
 
   html {
     @apply overflow-scroll scroll-smooth font-family-nunito;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground;
   }
 
   ::-webkit-scrollbar {
@@ -213,14 +219,4 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-  }
 }
