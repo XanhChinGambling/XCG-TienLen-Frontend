@@ -10,7 +10,7 @@ import { Toaster } from "@/component/ui/sonner";
 import { ThemeProvider } from "@/component/theme-provider";
 import { RSocketProvider } from "@/context/RsocketContext";
 import SettingDialog from "./pages/dialog/SettingDialog";
-import ApplicationRendering from "./pages/internal/BootstrappedApp";
+import ApplicationRendering from "./pages/internal/AppRendering";
 
 // --- Application ---
 
@@ -25,6 +25,7 @@ createRoot(document.getElementById("root")!).render(
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <Toaster />
         <SettingDialog />
+
         <ApplicationRendering />
       </ThemeProvider>
     </RSocketProvider>

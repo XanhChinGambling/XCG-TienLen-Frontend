@@ -1,5 +1,4 @@
 import { API_WS_BASE, ENV_IS_DEV } from "@/constants/Enviroment";
-import { FormatMetadata } from "@/util/CommonUtil";
 import { RSocketClient, JsonSerializer, IdentitySerializer } from "rsocket-core";
 import RSocketWebsocketClient from "rsocket-websocket-client";
 
@@ -22,7 +21,7 @@ const BackendRsocketClient = new RSocketClient({
     data: JsonSerializer,
     metadata: IdentitySerializer,
   },
-}).connect();
+});
 
 export default BackendRsocketClient;
 

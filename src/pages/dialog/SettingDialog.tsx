@@ -41,7 +41,7 @@ const SettingDialog = () => {
                 </Label>
                 <p className="text-xs text-muted-foreground">Tắt tất cả nguồn âm thanh</p>
               </div>
-              <Switch id="mute-toggle" checked={SoundContext.muted} onCheckedChange={SoundContext.toggle_mute} />
+              <Switch id="mute-toggle" checked={SoundContext.isMuted} onCheckedChange={SoundContext.toggleMute} />
             </div>
 
             {/* Volume Slider */}
@@ -49,7 +49,7 @@ const SettingDialog = () => {
               <div className="flex items-center justify-between">
                 <Label htmlFor="volume-slider" className="text-sm">
                   Âm lượng
-                  {SoundContext.muted && (
+                  {SoundContext.isMuted && (
                     <span className="text-xs text-muted-foreground"> Hủy tắt tiếng để điều chỉnh</span>
                   )}
                 </Label>
@@ -62,7 +62,7 @@ const SettingDialog = () => {
                 step={1}
                 value={[getVolumePercentage()]}
                 onValueChange={handleVolumeChange}
-                disabled={SoundContext.muted}
+                disabled={SoundContext.isMuted}
                 className="w-full"
               />
             </div>

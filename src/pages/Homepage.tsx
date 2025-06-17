@@ -81,8 +81,8 @@ function TopNavigationBar() {
         <button
           aria-label="mute-toggle"
           className="p-2 lg:p-3 hover:bg-foreground/20 rounded-30p transition-all"
-          onClick={() => SoundContext.toggle_mute()}>
-          {SoundContext.muted || SoundContext.volume < 0.2 ? (
+          onClick={() => SoundContext.toggleMute()}>
+          {SoundContext.isMuted || SoundContext.volume < 0.2 ? (
             <VolumeX className="size-6 text-muted-foreground" />
           ) : (
             <Volume2 className="size-6" />

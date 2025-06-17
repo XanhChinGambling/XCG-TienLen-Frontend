@@ -18,7 +18,7 @@ export const RSocketProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   useEffectOnce(() => {
     const subscriber = () => {
-      BackendRsocketClient.subscribe({
+      BackendRsocketClient.connect().subscribe({
         onComplete: (sk) => {
           socket.current = sk;
           connected.current = true;

@@ -2,56 +2,37 @@ import { create } from "zustand";
 
 interface SoundStore {
   volume: number; // 0.0 -> 1.0
-  muted: boolean;
-  isPlaying: boolean;
+
+  isMuted: boolean;
+  isBgmPlaying: boolean;
 
   setVolume: (v: number) => void;
-  toggle_mute: () => void;
+  toggleMute: () => void;
 
   init: () => void;
-  play: () => void;
-  pause: () => void;
+  playBgm: () => void;
+  pauseBgm: () => void;
 }
 
-const audio = new Audio("/sound/bgm.mp3");
-audio.loop = true;
-audio.volume = 0.5;
+const bgm = new Audio("/sound/bgm.mp3");
+bgm.loop = true;
+bgm.volume = 0.5;
 
 const useSoundContext = create<SoundStore>((set, get) => {
   return {
-    volume: audio.volume,
-    muted: false,
-    isPlaying: false,
+    volume: bgm.volume,
+    isMuted: false,
+    isBgmPlaying: false,
 
-    setVolume: (v: number) => {
-      audio.volume = v;
-      set({ volume: v });
-    },
+    setVolume: (v: number) => ((bgm.volume = v), set({ volume: v })),
+    toggleMute: () => ((bgm.muted = !bgm.muted), set({ isMuted: bgm.muted })),
 
-    toggle_mute: () => {
-      audio.muted = !audio.muted;
-      set({ muted: audio.muted });
-    },
-
-    play: () => {
-      audio
-        .play()
-        .then(() => {
-          set({ isPlaying: true });
-        })
-        .catch((err) => {
-          console.warn("Autoplay prevented or error:", err);
-        });
-    },
-
-    pause: () => {
-      audio.pause();
-      set({ isPlaying: false });
-    },
+    playBgm: () => bgm.play().then(() => set({ isBgmPlaying: true })),
+    pauseBgm: () => (bgm.pause(), set({ isBgmPlaying: false })),
 
     init: () => {
       const tryPlay = () => {
-        get().play();
+        get().playBgm();
 
         window.removeEventListener("click", tryPlay);
         window.removeEventListener("touchstart", tryPlay);
